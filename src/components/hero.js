@@ -3,21 +3,23 @@ import logo from "../assets/sivfit logo.jpg";
 
 export default function Hero() {
   return `
-<section id="hero" class="bg-white">
+<section id="hero" class="bg-white pt-16">
 
   <!-- ================= NAVBAR ================= -->
 
-  <header class="border-b border-gray-200 bg-white">
+  <header class="fixed top-0 left-0 right-0 z-50 border-b border-gray-200 bg-white">
 
     <div class="max-w-7xl mx-auto h-16 px-6 flex items-center justify-between">
 
       <!-- Logo -->
 
-      <img
-        src="${logo}"
-        alt="Sivfit"
-        class="h-9 w-auto"
-      />
+      <a href="#hero" class="flex items-center">
+        <img
+          src="${logo}"
+          alt="Sivfit"
+          class="h-9 w-auto"
+        />
+      </a>
 
       <!-- Desktop Navigation -->
 
@@ -63,6 +65,8 @@ export default function Hero() {
 
       <button
         id="menu-btn"
+        type="button"
+        aria-label="Open menu"
         class="lg:hidden text-2xl text-gray-800">
 
         ☰
@@ -75,31 +79,31 @@ export default function Hero() {
 
     <div
       id="mobile-menu"
-      class="hidden lg:hidden border-t border-gray-200 bg-white">
+      class="hidden lg:hidden absolute top-full left-0 right-0 border-t border-gray-200 bg-white shadow-md">
 
       <nav class="flex flex-col">
 
-        <a href="#hero" class="px-6 py-4 border-b">
+        <a href="#hero" class="px-6 py-4 border-b border-gray-200 hover:bg-gray-50">
           Home
         </a>
 
-        <a href="#care" class="px-6 py-4 border-b">
+        <a href="#care" class="px-6 py-4 border-b border-gray-200 hover:bg-gray-50">
           Care
         </a>
 
-        <a href="#athletics" class="px-6 py-4 border-b">
+        <a href="#athletics" class="px-6 py-4 border-b border-gray-200 hover:bg-gray-50">
           Athletics
         </a>
 
-        <a href="#gym" class="px-6 py-4 border-b">
+        <a href="#gym" class="px-6 py-4 border-b border-gray-200 hover:bg-gray-50">
           Gym
         </a>
 
-        <a href="#academy" class="px-6 py-4 border-b">
+        <a href="#academy" class="px-6 py-4 border-b border-gray-200 hover:bg-gray-50">
           Academy
         </a>
 
-        <a href="#store" class="px-6 py-4">
+        <a href="#store" class="px-6 py-4 hover:bg-gray-50">
           Store
         </a>
 
@@ -108,6 +112,7 @@ export default function Hero() {
     </div>
 
   </header>
+
 
   <!-- ================= HERO ================= -->
 
@@ -124,17 +129,13 @@ export default function Hero() {
           REDEFINING
 
           <span class="block text-[#2563EB] italic">
-
             HEALTH
-
           </span>
 
           AND
 
           <span class="block">
-
             FITNESS IN NIGERIA
-
           </span>
 
         </h1>
@@ -169,6 +170,7 @@ export default function Hero() {
 
       </div>
 
+
       <!-- RIGHT -->
 
       <div>
@@ -185,6 +187,7 @@ export default function Hero() {
 
   </div>
 
+
   <!-- ================= MISSION ================= -->
 
   <section class="border-y border-gray-200 py-10">
@@ -192,9 +195,7 @@ export default function Hero() {
     <div class="max-w-4xl mx-auto px-6 text-center">
 
       <h2 class="text-4xl font-bold text-gray-900">
-
         Mission Statement
-
       </h2>
 
       <p class="mt-6 text-[18px] leading-[34px] text-gray-600">
@@ -216,19 +217,30 @@ export default function Hero() {
 `;
 }
 
+
 export function initMobileMenu() {
+
   const button = document.getElementById("menu-btn");
   const menu = document.getElementById("mobile-menu");
 
   if (!button || !menu) return;
 
+
   button.addEventListener("click", () => {
+
     menu.classList.toggle("hidden");
+
   });
 
+
   menu.querySelectorAll("a").forEach((link) => {
+
     link.addEventListener("click", () => {
+
       menu.classList.add("hidden");
+
     });
+
   });
+
 }

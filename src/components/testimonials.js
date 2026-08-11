@@ -27,33 +27,50 @@ export default function Testimonials() {
   ];
 
   return `
-<section class="py-28 bg-white overflow-hidden">
+<section class="py-20 md:py-28 bg-white overflow-hidden">
 
   <div class="max-w-7xl mx-auto px-6">
 
+    <!-- Heading -->
     <div class="text-center">
 
-      <p class="text-blue-600 text-sm font-semibold uppercase tracking-[0.18em]">
+      <p class="text-blue-600 text-xs md:text-sm font-semibold uppercase tracking-[0.18em]">
         Testimonials
       </p>
 
-      <h2 class="mt-4 text-5xl font-extrabold text-gray-900">
+      <h2 class="mt-4 text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight max-w-4xl mx-auto">
         Trusted Across The Sivfit Community
       </h2>
 
-      <p class="mt-5 text-gray-500 max-w-3xl mx-auto leading-8">
-        Real feedback from people managing their health, training harder,
-        and reaching their goals with Sivfit.
+      <p class="mt-5 text-base md:text-lg text-gray-500 max-w-3xl mx-auto leading-7 md:leading-8">
+        Real feedback from people managing their health,
+        training harder, and reaching their goals with Sivfit.
       </p>
 
     </div>
 
+
+    <!-- ===================================================== -->
+    <!-- MOBILE TESTIMONIALS                                    -->
+    <!-- ===================================================== -->
+
+    <div class="mt-16 md:hidden">
+
+      ${testimonials.map(cardMobile).join("")}
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- DESKTOP TESTIMONIALS                                   -->
+    <!-- ===================================================== -->
+
     <div
       id="testimonial-slider"
-      class="mt-20 flex gap-24 overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth cursor-grab active:cursor-grabbing pb-6"
+      class="hidden md:flex mt-20 gap-24 overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth cursor-grab active:cursor-grabbing pb-6"
     >
 
-      ${testimonials.map(card).join("")}
+      ${testimonials.map(cardDesktop).join("")}
 
     </div>
 
@@ -63,29 +80,60 @@ export default function Testimonials() {
 `;
 }
 
-function card(item) {
-  return `
-<div class="snap-center shrink-0 w-[900px] text-center">
 
-  <p class="text-2xl leading-10 text-gray-600 italic">
+/* ============================================================
+   MOBILE CARD
+   ============================================================ */
+
+function cardMobile(item) {
+  return `
+<div class="w-full text-center py-10 border-b border-gray-200 last:border-b-0">
+
+  <!-- Quote -->
+
+  <p class="text-sm sm:text-base leading-6 sm:leading-7 text-gray-600 italic">
     "${item.quote}"
   </p>
 
-  <h3 class="mt-10 text-4xl font-bold text-black">
+
+  <!-- Name -->
+
+  <h3 class="mt-8 text-2xl font-bold text-gray-900">
     ${item.name}
   </h3>
 
-  <p class="mt-2 text-gray-500">
+
+  <!-- Role -->
+
+  <p class="mt-1 text-sm text-gray-500">
     ${item.role}
   </p>
 
-  <div class="mt-5 flex justify-center gap-4 text-sm text-gray-500">
 
-    <a href="#">Twitter(X)</a>
+  <!-- Socials -->
 
-    <a href="#">Facebook</a>
+  <div class="mt-5 flex justify-center gap-5 text-xs text-gray-500">
 
-    <a href="#">Instagram</a>
+    <a
+      href="#"
+      class="hover:text-blue-600 transition"
+    >
+      Twitter(X)
+    </a>
+
+    <a
+      href="#"
+      class="hover:text-blue-600 transition"
+    >
+      Facebook
+    </a>
+
+    <a
+      href="#"
+      class="hover:text-blue-600 transition"
+    >
+      Instagram
+    </a>
 
   </div>
 
@@ -93,32 +141,106 @@ function card(item) {
 `;
 }
 
+
+/* ============================================================
+   DESKTOP CARD
+   ============================================================ */
+
+function cardDesktop(item) {
+  return `
+<div class="snap-center shrink-0 w-[900px] text-center">
+
+  <!-- Quote -->
+
+  <p class="text-2xl leading-10 text-gray-600 italic">
+    "${item.quote}"
+  </p>
+
+
+  <!-- Name -->
+
+  <h3 class="mt-10 text-4xl font-bold text-black">
+    ${item.name}
+  </h3>
+
+
+  <!-- Role -->
+
+  <p class="mt-2 text-gray-500">
+    ${item.role}
+  </p>
+
+
+  <!-- Socials -->
+
+  <div class="mt-5 flex justify-center gap-4 text-sm text-gray-500">
+
+    <a
+      href="#"
+      class="hover:text-blue-600 transition"
+    >
+      Twitter(X)
+    </a>
+
+    <a
+      href="#"
+      class="hover:text-blue-600 transition"
+    >
+      Facebook
+    </a>
+
+    <a
+      href="#"
+      class="hover:text-blue-600 transition"
+    >
+      Instagram
+    </a>
+
+  </div>
+
+</div>
+`;
+}
+
+
+/* ============================================================
+   DESKTOP DRAG FUNCTIONALITY
+   ============================================================ */
+
 export function initTestimonials() {
   const slider = document.getElementById("testimonial-slider");
 
   if (!slider) return;
 
   let isDown = false;
-  let startX;
-  let scrollLeft;
+  let startX = 0;
+  let scrollLeft = 0;
+
 
   slider.addEventListener("mousedown", (e) => {
     isDown = true;
+
     slider.classList.add("cursor-grabbing");
 
     startX = e.pageX - slider.offsetLeft;
+
     scrollLeft = slider.scrollLeft;
   });
 
+
   slider.addEventListener("mouseleave", () => {
     isDown = false;
+
     slider.classList.remove("cursor-grabbing");
   });
 
+
   slider.addEventListener("mouseup", () => {
     isDown = false;
+
     slider.classList.remove("cursor-grabbing");
   });
+
 
   slider.addEventListener("mousemove", (e) => {
     if (!isDown) return;
@@ -126,6 +248,7 @@ export function initTestimonials() {
     e.preventDefault();
 
     const x = e.pageX - slider.offsetLeft;
+
     const walk = (x - startX) * 2;
 
     slider.scrollLeft = scrollLeft - walk;
